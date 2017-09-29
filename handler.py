@@ -21,21 +21,13 @@ def getRecallsConfiguration():
         smmtApiUrl = os.environ['SMMT_API_URI']
         print("Refreshing SNNT api url from OS")
 
-    print("SNNT Api URL: " + smmtApiUrl)
-
     if snntApiKey is None:
         session = boto3.session.Session()
         kms = session.client('kms')
 
-        smmtApiKeyFromEnv = os.environ['SMMT_API_KEY']
-        print("SMMT Api encrypted key: " + smmtApiKeyFromEnv)
-
-        encryptedSmmtApiKey = base64.b64decode(smmtApiKeyFromEnv)
+        encryptedSmmtApiKey = base64.b64decode(os.environ['SMMT_API_KEY'])
         snntApiKey = kms.decrypt(CiphertextBlob = encryptedSmmtApiKey)['Plaintext'].decode("ascii")
         print("Refreshing SNNT api key from OS")
-
-
-    print("SNNT Api decrypted key: " + snntApiKey)
 
     return {
         "snntApiUri": smmtApiUrl,
@@ -55,5 +47,5 @@ def sendRecallApiRequest(vin, marque, config):
 
     return {
         "statusCode": 200,
-        "body": json.dumps(body)
+        "body": json.dumps(response.json())
     }
