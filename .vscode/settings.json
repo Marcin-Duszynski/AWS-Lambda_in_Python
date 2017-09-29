@@ -1,0 +1,9 @@
+// Workspace settings
+{
+    "files.exclude": {
+        "*__pycache__/**": true,
+        ".cache/**": true,
+        ".serverless/**": true,
+        ".vscode/**": true
+    }
+}

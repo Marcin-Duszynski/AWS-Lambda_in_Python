@@ -1,0 +1,36 @@
+service: recalls-in-python
+
+provider:
+  name: aws
+  runtime: python3.6
+  memorySize: 128
+  stage: dev
+  region: eu-west-2
+  
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - KMS:Decrypt
+      Resource: ${env:RECALLS_KMS_ARN}
+
+  environment:
+    SMMT_API_KEY: ${env:SMMT_API_KEY}
+    SMMT_API_URI: ${env:SMMT_API_URI}
+
+package:
+  include:
+    - handler.py
+  exclude:
+    - .vscode/**
+    - __pycache__/**
+    - .cache/**
+    - .idea/**
+    - handler.spec.py
+
+functions:
+  recalls:
+    handler: handler.recall
+    events:
+     - http:
+         path: recalls
+         method: GET
