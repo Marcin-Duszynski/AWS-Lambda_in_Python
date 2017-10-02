@@ -7,7 +7,7 @@ import base64
 smmtApiUrl = None
 snntApiKey = None
 
-def recall(event, context):
+def handler(event, context):
     config = getRecallsConfiguration() 
     recall = sendRecallApiRequest("AISXXXTEST1239607", "BRUIN", config)
 

@@ -29,7 +29,7 @@ package:
 
 functions:
   recalls:
-    handler: handler.recall
+    handler: handler.handler
     events:
      - http:
          path: recalls
